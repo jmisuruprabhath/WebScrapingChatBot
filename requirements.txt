@@ -125,7 +125,7 @@ smmap
 sniffio
 soupsieve
 SQLAlchemy
-pysqlite3-binary
+sqlite3
 starlette
 streamlit
 sympy
