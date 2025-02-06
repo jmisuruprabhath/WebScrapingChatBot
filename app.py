@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 from langchain_community.document_loaders import WebBaseLoader
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import Chroma
@@ -92,6 +93,8 @@ if "qa" not in st.session_state:
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
+hf_api_key = os.getenv("HUGGINGFACE_API_TOKEN")
+
 # Layout for left side (prompting, answers, input) and right side (chat history)
 col1, col2 = st.columns([3, 1])  # 3 parts for left section, 1 part for history
 
@@ -113,7 +116,7 @@ with col1:
 
                 # Retrieval-based QA System
                 qa = RetrievalQA.from_chain_type(
-                    llm=HuggingFaceHub(repo_id="google/flan-t5-large", huggingfacehub_api_token="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"), 
+                    llm=HuggingFaceHub(repo_id="google/flan-t5-large", huggingfacehub_api_token=hf_api_key), 
                     chain_type="stuff",
                     retriever=vectorstore.as_retriever()
                 )
